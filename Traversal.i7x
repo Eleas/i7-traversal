@@ -6,7 +6,11 @@ Volume - Traversal
 
 Book - Defining the landmark kind
 
-A landmark is a kind of scenery privately-named thing.
+A landmark is a kind of thing. A landmark is usually scenery. A landmark is usually privately-named.
+
+The specification of landmark is "Represents a subdivision of its room. An actor can either occupy one landmark
+or none. When traversing between landmarks or the absence of a landmark, characters generate report messages
+and the opportunity for the author to interrupt their travel using rules."
 
 Part - Implication
 
