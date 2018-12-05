@@ -24,10 +24,7 @@ When play begins (this is the ensure things declared near are also locationally 
 Book - Traversing
 
 Proximity relates various things to each other in groups. The verb to be near means the proximity relation. 
-Definition: a thing is solitary:
-	if it is near nothing, yes;
-	if it is near something which is not it, no;
-	yes.
+Definition: a thing is solitary if it is not near something which is not it.
 To walk is a verb.
 
 Traversing to is an action applying to one thing.
@@ -51,7 +48,7 @@ Report someone traversing to when the actor is not near the starting-point and t
 	say "[The actor] [walk] over to [the noun]." (A).
 
 Report an actor traversing to a room when the actor is near a landmark (called the place) (this is the report room-to-room traversal rule):
-	say "[The actor] [walk] away from [the noun]." (A).
+	say "[The actor] [walk] away from [the place]." (A).
 
 Check an actor traversing to when the noun is a landmark (called the place) (this is the move away from landmark relocation rule):
 	now the noun is near the place.
@@ -107,19 +104,18 @@ Book - Actions affected by traversal
 	
 Going or opening or closing or pulling or eating or pushing or kissing or touching or taking or entering or searching or attacking or putting on or inserting is implicitly moving. 
 
-Before an actor going through a door near a landmark (called the path) when the path is in the location of the actor:
+Before an actor going through a door near a landmark (called the path) when the path is in the location of the actor (this is the block-if-impassable rule):
 	if the traversal of the actor with the path didn't succeed, abide by the failed to traverse rule.
 
-Before an actor going:
-	if the actor is not solitary:
-		if the door gone through is a solitary thing or the door gone through is nothing:
-			try the actor traversing to the location.
+Before an actor going when the actor is not solitary (this is the redirect traversal to location rule):
+	if the door gone through is a solitary thing or the door gone through is nothing:
+		try the actor traversing to the location.
 
-After an actor going through a door near a landmark (called the path) when the path is in the location of the actor:
+After an actor going through a door near a landmark (called the path) when the path is in the location of the actor (this is the relocate actor after passing through door rule):
 	try silently the actor traversing to the path;
 	continue the action.
 
-After an actor going when the door gone through is not near a landmark or the door gone through is nothing:
+After an actor going when the door gone through is not near a landmark or the door gone through is nothing (this is the uncouple actor post-going rule):
 	relocate the actor to nothing;
 	continue the action.
 
