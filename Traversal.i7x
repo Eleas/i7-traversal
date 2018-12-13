@@ -1,6 +1,8 @@
-Version 1 of Traversal by B David Paulsen begins here.
+Traversal by B David Paulsen begins here. 
 
-"Subdivides the room into nodes that actors are able to traverse."
+"Subdivides the room into nodes between which actors may traverse."
+
+[With thanks to Stephen Grant and the good folks over on the Inform7 Discord channel, for their invaluable feedback and testing.]
 
 Volume - Traversal
 
@@ -77,6 +79,7 @@ To decide whether traversal of (actor - a person) with (the item - a thing) didn
 	yes.
 
 This is the failed to traverse rule:
+	say "Failed traversal; action stops.";
 	stop the action.
 
 Book - Updating the world-state
@@ -86,12 +89,8 @@ After actor entering something (called item) which is near a landmark (this is t
 	continue the action.
 
 When play begins (this is the ensure enclosed items are proximate rule):
-	repeat with item running through containers:
-		now everything in the item is near the item;
-	repeat with item running through supporters:
-		now everything on the item is near the item;
-	repeat with item running through things which incorporate something:
-		now everything part of the item is near the item.
+	repeat with item running through things that enclose something:
+		now everything enclosed by the item is near the item.
 
 To relocate (item - a thing) to (spot - an object):
 	now the item is near nothing;
@@ -100,7 +99,7 @@ To relocate (item - a thing) to (spot - an object):
 		relocate the stuff to the spot.
 
 Book - Actions affected by traversal
-	
+
 Going or opening or closing or pulling or eating or pushing or kissing or touching or taking or entering or searching or attacking or putting on or inserting is implicitly moving. 
 
 Before an actor going through a door near a landmark (called the path) when the path is in the location of the actor (this is the block-if-impassable rule):
@@ -124,15 +123,19 @@ Before an actor implicitly moving (this is the general pre-empt actions to perfo
 	if the second noun is not nothing:
 		if the traversal of the actor with the second noun didn't succeed, abide by the failed to traverse rule.
 
+Last carry out an actor throwing something which is not held by the actor at (this is the place item near target after presumably successful throw rule):
+	relocate the noun to the second noun.
 
 
 Traversal ends here.
 
 ---- DOCUMENTATION ----
 
-This extension introduces the idea of traversal (which is implicit actions conveying actors between different spots in the room before doing something. 
+This extension introduces the idea of traversal (which is implicit actions conveying actors between different spots in the room before doing something. Traversal should still be considered to be in its alpha status (version 0.2).
 
 The central concept here is the existence of a "landmark". Anything that is labeled a landmark becomes a spatial node within the room. The intent is for each landmark to be immobile and present only in a given room, and therefore, the extension strongly discourages things that are portable (such as people) or span multiple rooms (such as backdrops) from being landmarks. Scope hacking may be able to circumvent this, and so should be used with care.
+
+If nothing else is specified, a landmark will be created with no attached Understand tokens. The original concept of landmarks does not imply direct contact or manipulation of landmarks, and a story that relaxes these constraints would need additional rules to gracefully handle physical interaction. 
 
 When the extension is active, persons implicitly use the "traversal" action for moving between points. If the traversal action is suppressed, the traversal itself halts, and the attempted action fails. The "failed to traverse rule" opts to do this silently, but can be easily swapped out for a more descriptive error message. 
 
@@ -145,7 +148,7 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 	The Ominous Hallway is a room. "You are standing in an ominous hallway, in the shadow of the [random landmark near the player][if the player is near the entrance]. Dust and cobwebs bar your path to the stairs[end if]." The printed name of the Ominous Hallway is "Ominous Hallway (near [the random landmark near the player])".
 
 	The entrance is a landmark. The entrance is in the Ominous Hallway. The player is near the entrance.
-	a thicker section of the cobwebs is a scenery landmark in the Ominous Hallway.
+	a thicker section of the cobwebs is a not privately-named scenery landmark in the Ominous Hallway. Understand "dust" as the thicker section of cobwebs. 
 	The area by the stairwell is a landmark. It is in the Ominous Hallway.
 	The stairs are a scenery enterable supporter in the Ominous Hallway. It is near the area by the stairwell. Before printing the name of the stairs when the player is not near the stairs, say "faraway ".
 	A torch is on the stairs. The torch is lit. The printed name of the torch is "single, sputtering torch".
@@ -192,3 +195,7 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 	Test me with "take torch/examine torch/kneel/take torch".
 	Test death with "touch torch/touch torch".
 	Test death2 with "touch torch/wait/wait".
+
+In the real world, we would naturally assume that something declared "near" another thing would be in the same room. Inform uses the "ensure things declared near are also locationally present rule" to infer this at beginning of the game. Any facility that moves the actor to another place would require a similar routine. 
+
+The extension also attempts to handle knock-on effects sensibly. Dropped things should be near the person dropping them, going through doors should mean the actor is no longer near things on its opposite side, and when traversal halts, the actor should be locationally near the landmark where that happened. The action of throwing things at other things is insidious in that manner: the "place item near target after presumably successful throw rule" is constructed to only fire if the throwing it at action is at least minimally implemented.
