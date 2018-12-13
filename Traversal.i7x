@@ -52,12 +52,6 @@ Report someone traversing to when the actor is not near the starting-point and t
 Report an actor traversing to a room when the actor is near a landmark (called the place) (this is the report room-to-room traversal rule):
 	say "[The actor] [walk] away from [the place]." (A).
 
-Check an actor traversing to when the noun is a landmark (called the place) (this is the move away from landmark relocation rule):
-	now the noun is near the place.
-
-Check an actor traversing to when the noun is near a landmark (called the place) (this is the move away from near landmark relocation rule):
-	now the noun is near the place.
-
 Carry out an actor traversing to something which is near a landmark (called the place) when the actor is not near the place (this is the move closer to thing relocation rule):
 	relocate the actor to the place.
 
@@ -144,11 +138,11 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 	*: "Only the Penitent Man" 
 
 	Include Traversal by B David Paulsen.
-	
+
 	The Ominous Hallway is a room. "You are standing in an ominous hallway, in the shadow of the [random landmark near the player][if the player is near the entrance]. Dust and cobwebs bar your path to the stairs[end if]." The printed name of the Ominous Hallway is "Ominous Hallway (near [the random landmark near the player])".
 
 	The entrance is a landmark. The entrance is in the Ominous Hallway. The player is near the entrance.
-	a thicker section of the cobwebs is a not privately-named scenery landmark in the Ominous Hallway. Understand "dust" as the thicker section of cobwebs. 
+	a thicker section of the cobwebs is a not privately-named scenery landmark in the Ominous Hallway. Understand "dust" as a thicker section of the cobwebs.
 	The area by the stairwell is a landmark. It is in the Ominous Hallway.
 	The stairs are a scenery enterable supporter in the Ominous Hallway. It is near the area by the stairwell. Before printing the name of the stairs when the player is not near the stairs, say "faraway ".
 	A torch is on the stairs. The torch is lit. The printed name of the torch is "single, sputtering torch".
@@ -157,7 +151,7 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 		try traversing to the thicker section of the cobwebs;
 		say "Something is wrong. You hear your father's voice on your own lips. '[italic type]Only the penitent man will pass...'[roman type][line break]" instead.
 
-	Penitence is a scene. Penitence begins when the player is near the thicker section of cobwebs.
+	Penitence is a scene. Penitence begins when the player is near a thicker section of the cobwebs.
 
 	Every turn during Penitence, say "[one of]The cobwebs before you flutter in an unseen breeze. [or]The cobwebs seem to bend and billow, almost as if they're rippling toward you. [or]The cobwebs part faster and faster, and there is a dreadful swooshing sound...- [stopping] [line break]".
 
@@ -170,9 +164,9 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 	To say the end message:
 		say "With a noise not unlike that of a butcher's cleaver, a heavy bronze blade sweeps through the cobwebs and then yourself. You fall to the ground, literally beside yourself.";
 		end the story.
-		
+
 	A person can be standing. A person is usually standing.
-	Dodging is an action applying to nothing. 
+	Dodging is an action applying to nothing.
 	Understand the command "kneel" as "sit".
 	Understand "kneel down/--" or "dodge" or "duck" as dodging.
 
@@ -191,6 +185,11 @@ Example: *  Only the Penitent Man  - A simple demonstration of a linear partitio
 	Every turn when the player is near the stairs:
 		say "As you pause on the stairs, your nerves still tingle. But you must press on, despite your misgivings. You shiver despite yourself. Who knew Bavarian farmers could be so protective of their secrets?";
 		end the story saying "You won!".
+
+	The player holds the stone.
+
+	The futile to throw things at inanimate objects rule does nothing.
+	The block throwing at rule does nothing.
 
 	Test me with "take torch/examine torch/kneel/take torch".
 	Test death with "touch torch/touch torch".
