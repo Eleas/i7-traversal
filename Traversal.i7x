@@ -73,7 +73,7 @@ To decide whether traversal of (actor - a person) with (the item - a thing) didn
 	yes.
 
 This is the failed to traverse rule:
-	say "Failed traversal; action stops.";
+	[say "Failed traversal; action stops.";]
 	stop the action.
 
 Book - Updating the world-state
