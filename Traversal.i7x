@@ -4,6 +4,8 @@ Traversal by B David Paulsen begins here.
 
 [With thanks to Stephen Grant and the good folks over on the Inform7 Discord channel, for their invaluable feedback and testing.]
 
+Use Debug output message translates as (- Constant DEBUG_TRAVERSAL_VERBOSE; -). 
+
 Volume - Traversal
 
 Book - Defining the landmark kind
@@ -73,7 +75,7 @@ To decide whether traversal of (actor - a person) with (the item - a thing) didn
 	yes.
 
 This is the failed to traverse rule:
-	[say "Failed traversal; action stops.";]
+	if the Debug output message option is active, say "Failed traversal; action stops.";
 	stop the action.
 
 Book - Updating the world-state
